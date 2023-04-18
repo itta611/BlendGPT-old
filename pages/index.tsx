@@ -1,3 +1,4 @@
+import Input from 'components/Input';
 import Logo from 'components/Logo';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -26,8 +27,15 @@ export default function Home() {
               aria-hidden="true"
               alt="image"
             />
-            <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
+            <Image
+              src="/dummy.png"
+              width={800}
+              height={600}
+              className="w-full border"
+              alt="image"
+            />
           </div>
+          <Input className="mt-8" />
         </div>
       </main>
     </>
