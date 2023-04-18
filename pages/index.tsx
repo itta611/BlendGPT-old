@@ -1,5 +1,6 @@
 import Logo from 'components/Logo';
 import Head from 'next/head';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -9,10 +10,24 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-[800px] m-auto py-3">
-        <h2 className="text-4xl">
-          <Logo />
-        </h2>
+      <main className="w-[800px] m-auto">
+        <div className="py-3">
+          <h2 className="text-4xl">
+            <Logo />
+          </h2>
+        </div>
+        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 shadow-md">
+          <div className="relative">
+            <Image
+              src="/dummy.png"
+              width={800}
+              height={600}
+              className="w-full scale-105 absolute top-0 blur-md opacity-20"
+              alt="image"
+            />
+            <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
+          </div>
+        </div>
       </main>
     </>
   );
