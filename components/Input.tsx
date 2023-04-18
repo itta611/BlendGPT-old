@@ -9,7 +9,7 @@ const Input: FC<InputProps> = ({ className, ...props }) => {
       {...props}
       className={classNames(
         className,
-        'w-full shadow-md bg-white/10 rounded-md p-3 outline-none focus:ring-4 transition-all'
+        'w-full shadow-md bg-white/10 rounded-md px-5 py-3 outline-none focus:ring-4 transition-all'
       )}
     />
   );
