@@ -22,7 +22,8 @@ export default function Home() {
               src="/dummy.png"
               width={800}
               height={600}
-              className="w-full scale-105 absolute top-0 blur-md opacity-20"
+              className="w-full scale-105 absolute top-0 blur-md opacity-20 select-none pointer-events-none"
+              aria-hidden="true"
               alt="image"
             />
             <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
