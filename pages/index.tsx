@@ -35,7 +35,7 @@ export default function Home() {
               alt="image"
             />
           </div>
-          <Input className="mt-8" />
+          <Input className="mt-8" rightItem={'asdf'} />
         </div>
       </main>
     </>

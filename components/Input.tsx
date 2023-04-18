@@ -1,17 +1,31 @@
 import classNames from 'classnames';
-import { FC, InputHTMLAttributes } from 'react';
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface HorizontalItemProps {
+  children: ReactNode;
+}
 
-const Input: FC<InputProps> = ({ className, ...props }) => {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  leftItem?: ReactNode;
+  rightItem?: ReactNode;
+}
+
+const HorizontalItem: FC<HorizontalItemProps> = ({ children }) => {
+  return <div className="absolute right-0 top-0 bottom-0 flex items-center mx-3">{children}</div>;
+};
+
+const Input: FC<InputProps> = ({ className, leftItem, rightItem, ...props }) => {
   return (
-    <input
-      {...props}
-      className={classNames(
-        className,
-        'w-full shadow-md bg-white/10 rounded-md px-5 py-3 outline-none focus:ring-4 transition-all'
-      )}
-    />
+    <div className={classNames(className, 'relative')}>
+      {leftItem && <HorizontalItem>{leftItem}</HorizontalItem>}
+      <input
+        {...props}
+        className={
+          'w-full shadow-md bg-white/10 rounded-md px-5 py-3 outline-none focus:ring-4 transition-all'
+        }
+      />
+      {rightItem && <HorizontalItem>{rightItem}</HorizontalItem>}
+    </div>
   );
 };
 
