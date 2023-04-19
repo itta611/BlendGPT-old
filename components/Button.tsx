@@ -39,13 +39,16 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
           { 'h-9 px-4 text-sm rounded-md': size === 'sm' },
           { 'h-11 px-6 text-base rounded-lg': size === 'md' },
           {
-            'bg-purple-gradient before:opacity-0 hover:before:opacity-100 before:transition before:absolute before:inset-0 before:bg-purple-dark-gradient !text-white':
+            'bg-pink-400 !text-white hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400':
               variant === 'primary',
           },
           {
-            'bg-white text-gray-700 hover:bg-gray-100 border': variant === 'secondary',
+            'text-gray-700 hover:bg-pink-300 border': variant === 'secondary',
           },
-          { 'bg-transparent text-gray-700 hover:bg-gray-100': variant === 'ghost' },
+          {
+            'bg-transparent text-gray-700 hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400':
+              variant === 'ghost',
+          },
           className
         )}
         onClick={isLoading ? undefined : onClick}

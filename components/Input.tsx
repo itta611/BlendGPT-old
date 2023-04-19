@@ -11,7 +11,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const HorizontalItem: FC<HorizontalItemProps> = ({ children }) => {
-  return <div className="absolute right-0 top-0 bottom-0 flex items-center mx-3">{children}</div>;
+  return <div className="absolute right-0 top-0 bottom-0 flex items-center">{children}</div>;
 };
 
 const Input: FC<InputProps> = ({ className, leftItem, rightItem, ...props }) => {

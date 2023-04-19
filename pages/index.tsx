@@ -39,7 +39,11 @@ export default function Home() {
           </div>
           <Input
             className="mt-8"
-            rightItem={<IconButton className="h-8 w-8">{<IconSend />}</IconButton>}
+            rightItem={
+              <IconButton variant="ghost" className="rounded-l-none w-16">
+                {<IconSend size={20} />}
+              </IconButton>
+            }
           />
         </div>
       </main>

@@ -7,12 +7,7 @@ const IconButton = forwardRef<
   Omit<PropsWithoutRef<ButtonProps>, 'size'>
 >(({ children, className, ...props }, ref) => {
   return (
-    <Button
-      className={classNames('w-12 h-12 !p-0 text-gray-500', className)}
-      variant="ghost"
-      ref={ref}
-      {...props}
-    >
+    <Button className={classNames('w-12 h-12 !p-0 text-gray-500', className)} ref={ref} {...props}>
       {children}
     </Button>
   );
