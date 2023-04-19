@@ -19,7 +19,7 @@ export default function Home() {
             <Logo />
           </h2>
         </div>
-        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 shadow-md">
+        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md">
           <div className="relative">
             <Image
               src="/dummy.png"
