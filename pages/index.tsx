@@ -29,13 +29,7 @@ export default function Home() {
               aria-hidden="true"
               alt="image"
             />
-            <Image
-              src="/dummy.png"
-              width={800}
-              height={600}
-              className="w-full border"
-              alt="image"
-            />
+            <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
           </div>
           <Input
             className="mt-8"
