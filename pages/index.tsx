@@ -1,3 +1,5 @@
+import { IconSend } from '@tabler/icons-react';
+import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 import Logo from 'components/Logo';
 import Head from 'next/head';
@@ -35,7 +37,10 @@ export default function Home() {
               alt="image"
             />
           </div>
-          <Input className="mt-8" rightItem={'asdf'} />
+          <Input
+            className="mt-8"
+            rightItem={<IconButton className="h-8 w-8">{<IconSend />}</IconButton>}
+          />
         </div>
       </main>
     </>
