@@ -4,8 +4,25 @@ import Input from 'components/Input';
 import Logo from 'components/Logo';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState } from 'react';
+import useSWRMutation from 'swr/mutation';
+
+async function postMessage(url: string, { arg }: { arg: string }) {
+  await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) }).then((r) =>
+    r.json()
+  );
+}
 
 export default function Home() {
+  const { trigger } = useSWRMutation('/api/edit-image', postMessage);
+  const [message, setMessage] = useState<string | undefined>(undefined);
+
+  const handlePost = () => {
+    if (typeof message !== 'undefined' && message !== '') {
+      trigger(message);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -31,14 +48,25 @@ export default function Home() {
             />
             <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
           </div>
-          <Input
-            className="mt-8"
-            rightItem={
-              <IconButton variant="ghost" className="rounded-l-none w-16">
-                {<IconSend size={20} />}
-              </IconButton>
-            }
-          />
+          <form>
+            <Input
+              className="mt-8"
+              onChange={(e) => setMessage(e.target.value)}
+              rightItem={
+                <IconButton
+                  type="submit"
+                  variant="ghost"
+                  className="rounded-l-none w-16"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePost();
+                  }}
+                >
+                  {<IconSend size={20} />}
+                </IconButton>
+              }
+            />
+          </form>
         </div>
       </main>
     </>
