@@ -28,8 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
+  console.log(completion.data.choices[0].message.content);
   const { code, types } = JSON.parse(completion.data.choices[0].message.content);
-  console.log(code, types);
 
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST']);
