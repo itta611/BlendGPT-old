@@ -2,6 +2,7 @@ import { IconSend } from '@tabler/icons-react';
 import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 import Logo from 'components/Logo';
+import WebGLCanvas from 'components/WebGLCavas';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -46,7 +47,8 @@ export default function Home() {
         </div>
         <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md">
           <div className="relative">
-            <Image
+            <WebGLCanvas className="w-full" />
+            {/* <Image
               src="/dummy.png"
               width={800}
               height={600}
@@ -54,7 +56,7 @@ export default function Home() {
               aria-hidden="true"
               alt="image"
             />
-            <Image src="/dummy.png" width={800} height={600} className="w-full" alt="image" />
+            <Image src="/dummy.png" width={800} height={600} className=X alt="image" /> */}
           </div>
           <form>
             <Input
