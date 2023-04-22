@@ -20,7 +20,10 @@ export default function Home() {
 
   const handlePost = () => {
     if (isLoading) return;
+
     setIsLoading(true);
+    setMessage(undefined);
+
     if (typeof message !== 'undefined' && message !== '') {
       trigger(message);
     }
@@ -55,6 +58,7 @@ export default function Home() {
             <Input
               className="mt-8"
               onChange={(e) => setMessage(e.target.value)}
+              value={message}
               rightItem={
                 <IconButton
                   type="submit"
