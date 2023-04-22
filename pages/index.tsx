@@ -61,6 +61,7 @@ export default function Home() {
               className="mt-8"
               onChange={(e) => setMessage(e.target.value)}
               value={message}
+              placeholder="行いたい操作をできるだけ具体的に書いてね！"
               rightItem={
                 <IconButton
                   type="submit"
