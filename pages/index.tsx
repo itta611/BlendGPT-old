@@ -19,6 +19,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePost = () => {
+    if (isLoading) return;
     setIsLoading(true);
     if (typeof message !== 'undefined' && message !== '') {
       trigger(message);

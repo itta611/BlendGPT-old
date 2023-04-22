@@ -50,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
           },
           className
         )}
-        onClick={isLoading ? undefined : onClick}
+        onClick={onClick}
         ref={ref}
         {...props}
       >
