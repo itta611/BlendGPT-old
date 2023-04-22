@@ -43,10 +43,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
               variant === 'primary',
           },
           {
-            'text-gray-700 hover:bg-pink-300 border': variant === 'secondary',
-          },
-          {
-            'bg-transparent text-gray-700 hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400':
+            'bg-transparent text-white hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
               variant === 'ghost',
           },
           className
