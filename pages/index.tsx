@@ -16,8 +16,10 @@ async function postMessage(url: string, { arg }: { arg: string }) {
 export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
   const [message, setMessage] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePost = () => {
+    setIsLoading(true);
     if (typeof message !== 'undefined' && message !== '') {
       trigger(message);
     }
@@ -57,6 +59,7 @@ export default function Home() {
                   type="submit"
                   variant="ghost"
                   className="rounded-l-none w-16"
+                  isLoading={isLoading}
                   onClick={(e) => {
                     e.preventDefault();
                     handlePost();

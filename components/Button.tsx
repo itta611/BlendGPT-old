@@ -33,18 +33,20 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
     return (
       <Component
         className={classNames(
-          'inline-flex items-center justify-center font-bold whitespace-nowrap relative select-none overflow-hidden',
-          'focus:outline-none transition',
+          'inline-flex items-center justify-center font-bold whitespace-nowrap relative select-none space-x-2 text-white',
+          'transition',
+          {
+            'hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
+              !isLoading,
+          },
           { 'cursor-default': isLoading },
           { 'h-9 px-4 text-sm rounded-md': size === 'sm' },
           { 'h-11 px-6 text-base rounded-lg': size === 'md' },
           {
-            'bg-pink-400 !text-white hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400':
-              variant === 'primary',
+            'bg-pink-400': variant === 'primary',
           },
           {
-            'bg-transparent text-white hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
-              variant === 'ghost',
+            'bg-transparent': variant === 'ghost',
           },
           className
         )}
@@ -52,14 +54,9 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         ref={ref}
         {...props}
       >
-        {showLoader && <span className="mr-2">{leftIcon}</span>}
-        {isLoading && (
-          <Loader
-            className={classNames('mr-2', { 'text-white': variant === 'primary' })}
-            size={size === 'md' ? 20 : 16}
-          />
-        )}
-        <span className="z-10">{children}</span>
+        {showLoader && <span>{leftIcon}</span>}
+        {isLoading && <Loader className={'text-inherit'} size={size === 'md' ? 20 : 16} />}
+        {children}
       </Component>
     );
   }
