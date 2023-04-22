@@ -8,24 +8,26 @@ import { useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 
 async function postMessage(url: string, { arg }: { arg: string }) {
-  await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) }).then((r) =>
-    r.json()
-  );
+  await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) }).then((r) => {
+    if (!r.ok) return;
+    r.json();
+  });
 }
 
 export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
-  const [message, setMessage] = useState<string | undefined>(undefined);
+  const [message, setMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (isLoading) return;
 
-    setIsLoading(true);
-    setMessage(undefined);
-
     if (typeof message !== 'undefined' && message !== '') {
-      trigger(message);
+      setIsLoading(true);
+      setMessage('');
+
+      await trigger(message);
+      setIsLoading(false);
     }
   };
 
