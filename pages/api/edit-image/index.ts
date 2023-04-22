@@ -9,6 +9,7 @@ interface Data {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { method, body } = req;
   const { message, parentMessageId } = JSON.parse(body);
+  let JSONData;
 
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -28,8 +29,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  console.log(completion.data.choices[0].message.content);
-  const { code, types } = JSON.parse(completion.data.choices[0].message.content);
+  const responseData = completion.data.choices[0].message.content;
+
+  try {
+    JSONData = JSON.parse(responseData);
+    JSONData.isSuccess = true;
+  } catch {
+    JSONData = { isSuccess: false, message: responseData };
+  }
 
   if (method !== 'POST') {
     res.setHeader('Allow', ['POST']);
@@ -37,5 +44,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  res.status(200).json({ name: JSON.parse(completion.data.choices[0].message.content) });
+  res.status(200).json({ name: JSONData });
 }

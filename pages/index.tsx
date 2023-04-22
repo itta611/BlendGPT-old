@@ -9,7 +9,7 @@ import useSWRMutation from 'swr/mutation';
 
 async function postMessage(url: string, { arg }: { arg: string }) {
   await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) }).then((r) => {
-    if (!r.ok) return;
+    if (!r.ok) throw new Error('Failed to post message');
     r.json();
   });
 }
