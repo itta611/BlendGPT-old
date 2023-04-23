@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
-import { FC, HTMLAttributes, useCallback, useEffect, useRef } from 'react';
+import { FC, HTMLAttributes, useCallback, useRef } from 'react';
 
 interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {}
 
