@@ -13,6 +13,9 @@ const WebGLCanvas: FC<WebGLCanvasProps> = ({ ...props }) => {
       await canvasDrawerRef.current.init();
       canvasDrawerRef.current.draw();
     })();
+    return () => {
+      canvasDrawerRef.current.discard();
+    };
   }, []);
 
   return <canvas ref={canvasRef} {...props}></canvas>;

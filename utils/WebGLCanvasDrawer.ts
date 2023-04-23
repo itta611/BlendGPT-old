@@ -29,6 +29,10 @@ void main() {
     this.program = undefined!;
   }
 
+  discard() {
+    this.gl.deleteProgram(this.program);
+  }
+
   private createShader(gl: WebGLRenderingContext, type: number, source: string) {
     const shader = gl.createShader(type)!;
     gl.shaderSource(shader, source);
