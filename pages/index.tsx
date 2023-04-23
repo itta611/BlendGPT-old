@@ -3,22 +3,26 @@ import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 import Logo from 'components/Logo';
 import WebGLCanvas from 'components/WebGLCavas';
+import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 
-async function postMessage(url: string, { arg }: { arg: string }) {
-  await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) }).then((r) => {
-    if (!r.ok) throw new Error('Failed to post message');
-    r.json();
-  });
+async function postMessage(
+  url: string,
+  { arg }: { arg: string }
+): Promise<{ isSuccess: boolean; code: string; params: any[] }> {
+  const r = await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) });
+  return r.json();
 }
 
 export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
-  const [message, setMessage] = useState<string>('');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [params, setParams] = useState([]); // TODO: Create `param` type
+  const canvasDrawer = useCanvasDrawer();
 
   const handlePost = async () => {
     if (isLoading) return;
@@ -27,8 +31,24 @@ export default function Home() {
       setIsLoading(true);
       setMessage('');
 
-      await trigger(message);
+      const response = await trigger(message);
+      if (typeof response === 'undefined') {
+        throw Error('Post failed.');
+      }
       setIsLoading(false);
+
+      if (!response.isSuccess) {
+        alert('エラーが発生しました。');
+        return;
+      }
+
+      canvasDrawer.updateFragmentShader(response.code);
+      console.log(response.code);
+      response.params.forEach((param) => {
+        canvasDrawer.appendUniformVariable(param.name, param.default);
+      });
+      canvasDrawer.draw();
+      setParams(response.params as never);
     }
   };
 

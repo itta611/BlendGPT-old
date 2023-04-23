@@ -6,9 +6,9 @@ export class WebGLCanvasDrawer {
   fragmentShaderSource: string;
   program: WebGLProgram;
 
-  constructor(canvas: HTMLCanvasElement, imageURL: string) {
-    this.canvas = canvas;
-    this.imageURL = imageURL;
+  constructor() {
+    this.canvas = undefined!;
+    this.imageURL = undefined!;
     this.gl = undefined!;
     this.vertexShaderSource = `attribute vec4 a_position;
 attribute vec2 a_texCoord;
@@ -24,12 +24,11 @@ varying vec2 v_texCoord;
 void main() {
   vec4 color = texture2D(u_image, v_texCoord);
   gl_FragColor = color;
-}
-`;
+}`;
     this.program = undefined!;
   }
 
-  discard() {
+  public discard() {
     this.gl.deleteProgram(this.program);
   }
 
@@ -83,9 +82,12 @@ void main() {
       this.fragmentShaderSource
     );
     this.program = this.createProgram(this.gl, vertexShader!, fragmentShader!)!;
+    this.gl.useProgram(this.program);
   }
 
-  public async init() {
+  public async init(canvas: HTMLCanvasElement, imageURL: string) {
+    this.canvas = canvas;
+    this.imageURL = imageURL;
     this.gl = (this.canvas.getContext('webgl') ||
       this.canvas.getContext('experimental-webgl')) as WebGLRenderingContext;
 
@@ -141,9 +143,15 @@ void main() {
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
   }
 
+  public appendUniformVariable(name: string, value: number) {
+    const uniformLocation = this.gl.getUniformLocation(this.program, name);
+    this.gl.uniform1f(uniformLocation, value); // Increase this value for more blur
+    console.log('uniform variable appended');
+  }
+
   public updateFragmentShader(shader: string) {
     this.fragmentShaderSource = shader;
-    this.draw();
+    this.setupProgram();
   }
 
   public draw() {
@@ -151,8 +159,6 @@ void main() {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-
-    this.gl.useProgram(this.program);
 
     const resolutionUniformLocation = this.gl.getUniformLocation(this.program, 'u_resolution');
     this.gl.uniform2f(resolutionUniformLocation, this.canvas.width, this.canvas.height);

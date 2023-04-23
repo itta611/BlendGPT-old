@@ -1,22 +1,21 @@
+import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import { FC, HTMLAttributes, useEffect, useRef } from 'react';
-import { WebGLCanvasDrawer } from 'utils/WebGLCanvasDrawer';
 
 interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {}
 
 const WebGLCanvas: FC<WebGLCanvasProps> = ({ ...props }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const canvasDrawerRef = useRef<WebGLCanvasDrawer>(null!);
+  const canvasDrawer = useCanvasDrawer();
 
   useEffect(() => {
     (async () => {
-      canvasDrawerRef.current = new WebGLCanvasDrawer(canvasRef.current, '/dummy.png');
-      await canvasDrawerRef.current.init();
-      canvasDrawerRef.current.draw();
+      await canvasDrawer.init(canvasRef.current, '/dummy.png');
+      canvasDrawer.draw();
     })();
     return () => {
-      canvasDrawerRef.current.discard();
+      canvasDrawer.discard();
     };
-  }, []);
+  }, [canvasDrawer]);
 
   return <canvas ref={canvasRef} {...props}></canvas>;
 };

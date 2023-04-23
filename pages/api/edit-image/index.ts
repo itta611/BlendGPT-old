@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   const responseData = completion.data.choices[0].message.content;
+  console.log(responseData);
 
   try {
     JSONData = JSON.parse(responseData);
@@ -44,5 +45,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  res.status(200).json({ name: JSONData });
+  res.status(200).json(JSONData);
 }

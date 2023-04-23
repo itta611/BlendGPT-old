@@ -1,6 +1,5 @@
-const systemPrompt = `Format the shader code, outputting any variables besides the default uniform variables u_image, u_resolution and v_texCoord that need to be passed to params.
-Only include JSON information.
-If you can't output the accurate result, output the reason.
+const systemPrompt = `Create the fragment shader code, outputting any variables besides the default uniform variables u_image, u_resolution, and v_texCoord that must be passed to params.
+Be sure to remove information other than JSON.
 
 ## Format
 
@@ -8,8 +7,9 @@ If you can't output the accurate result, output the reason.
   "code": string, // Created shader code
   "params": {
     "name": string, // Variable name
-    "type": string, // Variable type
+    "type": string, // Variable type ("float" or "int")
     "label": string // Parameter description
+    "default": number // Default value
   }[] // Type info for uniform variables
 }`;
 
