@@ -2,6 +2,7 @@ export class WebGLCanvasDrawer {
   canvas: HTMLCanvasElement;
   imageURL: string;
   gl: WebGLRenderingContext;
+  drawCallbacks: (() => void)[];
   vertexShaderSource: string;
   fragmentShaderSource: string;
   program: WebGLProgram;
@@ -10,6 +11,7 @@ export class WebGLCanvasDrawer {
     this.canvas = undefined!;
     this.imageURL = undefined!;
     this.gl = undefined!;
+    this.drawCallbacks = [];
     this.vertexShaderSource = `attribute vec4 a_position;
 attribute vec2 a_texCoord;
 varying vec2 v_texCoord;
@@ -30,6 +32,20 @@ void main() {
 
   public discard() {
     this.gl.deleteProgram(this.program);
+  }
+
+  public onDraw(callback: () => void) {
+    this.drawCallbacks.push(callback);
+  }
+
+  private dispatchDraw() {
+    this.drawCallbacks.forEach((callback) => {
+      callback();
+    });
+  }
+
+  public discardAllCallbacks() {
+    this.drawCallbacks = [];
   }
 
   private createShader(gl: WebGLRenderingContext, type: number, source: string) {
@@ -167,5 +183,7 @@ void main() {
     this.gl.uniform1f(radiusUniformLocation, 5.0); // Increase this value for more blur
 
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
+
+    this.dispatchDraw();
   }
 }
