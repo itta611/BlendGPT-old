@@ -2,15 +2,17 @@ import classNames from 'classnames';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import { FC, HTMLAttributes, useCallback, useRef } from 'react';
 
-interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {}
+interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {
+  imageURL: string;
+}
 
-const WebGLCanvas: FC<WebGLCanvasProps> = ({ className, ...props }) => {
+const WebGLCanvas: FC<WebGLCanvasProps> = ({ imageURL, className, ...props }) => {
   const canvasDrawer = useCanvasDrawer();
   const canvasElementRef = useRef<HTMLCanvasElement>(null!);
   const canvasCloneElementRef = useRef<HTMLCanvasElement>(null!);
   const handleCanvasSet = useCallback(async () => {
     if (canvasElementRef.current === null || canvasCloneElementRef.current === null) return;
-    await canvasDrawer.init(canvasElementRef.current, '/dummy.png');
+    await canvasDrawer.init(canvasElementRef.current, imageURL);
 
     canvasDrawer.onDraw(() => {
       const context = canvasCloneElementRef.current.getContext('2d');

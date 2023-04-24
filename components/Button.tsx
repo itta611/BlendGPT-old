@@ -36,14 +36,14 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
           'inline-flex items-center justify-center font-bold whitespace-nowrap relative select-none space-x-2 text-white',
           'transition',
           {
-            'hover:bg-pink-300 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
+            'hover:bg-pink-200 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
               !isLoading,
           },
           { 'cursor-default': isLoading },
           { 'h-9 px-4 text-sm rounded-md': size === 'sm' },
           { 'h-11 px-6 text-base rounded-lg': size === 'md' },
           {
-            'bg-pink-400': variant === 'primary',
+            'bg-white/20 border-l-white/10 border-t-white/10': variant === 'primary',
           },
           {
             'bg-transparent': variant === 'ghost',

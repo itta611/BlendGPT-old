@@ -1,4 +1,5 @@
 import { IconSend } from '@tabler/icons-react';
+import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 import Logo from 'components/Logo';
@@ -6,7 +7,7 @@ import WebGLCanvas from 'components/WebGLCavas';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 
 async function postMessage(
@@ -21,8 +22,18 @@ export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [imageURL, setImageURL] = useState<string | undefined>(undefined);
   const [params, setParams] = useState([]); // TODO: Create `param` type
   const canvasDrawer = useCanvasDrawer();
+
+  const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('e.target.files', e.target.files);
+    if (e.target.files === null) return;
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+
+    setImageURL(url);
+  };
 
   const handlePost = async () => {
     if (isLoading) return;
@@ -66,18 +77,31 @@ export default function Home() {
           </h2>
         </div>
         <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md">
-          <div className="relative">
-            <WebGLCanvas className="w-full" />
-            {/* <Image
-              src="/dummy.png"
-              width={800}
-              height={600}
-              className="w-full scale-105 absolute top-0 blur-md opacity-20 select-none pointer-events-none"
-              aria-hidden="true"
-              alt="image"
-            />
-            <Image src="/dummy.png" width={800} height={600} className=X alt="image" /> */}
-          </div>
+          {imageURL ? (
+            <div className="max-h-[500px]">
+              <WebGLCanvas imageURL={imageURL} className="w-full max-h-[500px] object-contain" />
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full h-[400px] space-y-6">
+              <p className="text-center text-slate-400">
+                画像を選択してください。
+                <br />
+                （選択された画像がサーバーにアップロードされることはありません。）
+              </p>
+              <label htmlFor="file-select">
+                <Button as="span" className="cursor-pointer">
+                  画像を選択
+                </Button>
+              </label>
+              <input
+                type="file"
+                id="file-select"
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileSelect}
+              />
+            </div>
+          )}
           <form>
             <Input
               className="mt-8"
