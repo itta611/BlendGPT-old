@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
-import { FC, HTMLAttributes, useCallback, useRef } from 'react';
+import { FC, HTMLAttributes, useCallback, useEffect, useRef } from 'react';
 
 interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {
   imageURL: string;
@@ -24,7 +24,7 @@ const WebGLCanvas: FC<WebGLCanvasProps> = ({ imageURL, className, ...props }) =>
     });
 
     canvasDrawer.draw();
-  }, [canvasDrawer]);
+  }, [canvasDrawer, imageURL]);
   const canvasRef = useCallback(
     (element: HTMLCanvasElement) => {
       canvasElementRef.current = element;
@@ -39,6 +39,12 @@ const WebGLCanvas: FC<WebGLCanvasProps> = ({ imageURL, className, ...props }) =>
     },
     [handleCanvasSet]
   );
+
+  useEffect(() => {
+    return () => {
+      canvasDrawer.discardAllCallbacks();
+    };
+  });
 
   return (
     <div className="relative">
