@@ -7,7 +7,7 @@ import WebGLCanvas from 'components/WebGLCavas';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { Response } from 'types/base';
 
@@ -20,6 +20,7 @@ export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
   const [params, setParams] = useState([]);
   const canvasDrawer = useCanvasDrawer();
@@ -37,6 +38,7 @@ export default function Home() {
 
     if (typeof inputMessage !== 'undefined' && inputMessage !== '') {
       setIsLoading(true);
+      setErrorMessage('');
       setInputMessage('');
 
       const response = await trigger(inputMessage);
@@ -46,6 +48,7 @@ export default function Home() {
       setIsLoading(false);
 
       if (!response.success) {
+        setErrorMessage(response.message);
         return;
       }
 
@@ -118,6 +121,12 @@ export default function Home() {
                 </IconButton>
               }
             />
+            {isLoading && <span className="text-xs font-bold">AIが考え中...</span>}
+            {errorMessage && (
+              <span className="text-xs font-bold text-red-400">
+                AIからのメッセージ: {errorMessage}
+              </span>
+            )}
           </form>
         </div>
       </main>
