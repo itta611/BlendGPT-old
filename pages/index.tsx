@@ -121,9 +121,9 @@ export default function Home() {
                 </IconButton>
               }
             />
-            {isLoading && <span className="text-xs font-bold">AIが考え中...</span>}
+            {isLoading && <span className="text-xs font-bold mt-2">AIが考え中...</span>}
             {errorMessage && (
-              <span className="text-xs font-bold text-red-400">
+              <span className="text-xs font-bold text-red-400 mt-2">
                 AIからのメッセージ: {errorMessage}
               </span>
             )}
