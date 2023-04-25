@@ -103,6 +103,7 @@ export default function Home() {
           <form>
             <Input
               className="mt-8"
+              disabled={typeof imageURL === 'undefined'}
               onChange={(e) => setInputMessage(e.target.value)}
               value={inputMessage}
               placeholder="操作を具体的に書いてください！"
