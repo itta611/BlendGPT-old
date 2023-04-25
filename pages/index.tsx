@@ -81,7 +81,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-[400px] space-y-6">
-              <p className="text-center text-slate-400">
+              <p className="text-center text-slate-400 text-sm">
                 画像を選択してください。
                 <br />
                 （選択された画像がサーバーにアップロードされることはありません。）
