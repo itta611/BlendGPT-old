@@ -9,25 +9,22 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
+import { Response } from 'types/base';
 
-async function postMessage(
-  url: string,
-  { arg }: { arg: string }
-): Promise<{ isSuccess: boolean; code: string; params: any[] }> {
+async function postMessage(url: string, { arg }: { arg: string }): Promise<Response> {
   const r = await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) });
   return r.json();
 }
 
 export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
-  const [message, setMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
-  const [params, setParams] = useState([]); // TODO: Create `param` type
+  const [params, setParams] = useState([]);
   const canvasDrawer = useCanvasDrawer();
 
   const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('e.target.files', e.target.files);
     if (e.target.files === null) return;
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
@@ -38,25 +35,23 @@ export default function Home() {
   const handlePost = async () => {
     if (isLoading) return;
 
-    if (typeof message !== 'undefined' && message !== '') {
+    if (typeof inputMessage !== 'undefined' && inputMessage !== '') {
       setIsLoading(true);
-      setMessage('');
+      setInputMessage('');
 
-      const response = await trigger(message);
+      const response = await trigger(inputMessage);
       if (typeof response === 'undefined') {
         throw Error('Post failed.');
       }
       setIsLoading(false);
 
-      if (!response.isSuccess) {
-        alert('エラーが発生しました。');
+      if (!response.success) {
         return;
       }
 
       canvasDrawer.updateFragmentShader(response.code);
-      console.log(response.code);
       response.params.forEach((param) => {
-        canvasDrawer.appendUniformVariable(param.name, param.default);
+        canvasDrawer.appendUniformVariable(param.name, param.value);
       });
       canvasDrawer.draw();
       setParams(response.params as never);
@@ -105,8 +100,8 @@ export default function Home() {
           <form>
             <Input
               className="mt-8"
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
+              onChange={(e) => setInputMessage(e.target.value)}
+              value={inputMessage}
               placeholder="操作を具体的に書いてください！"
               rightItem={
                 <IconButton

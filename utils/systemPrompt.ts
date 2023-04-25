@@ -8,8 +8,11 @@ Be sure to remove information other than JSON.
   "params": {
     "name": string, // Variable name
     "type": string, // Variable type ("float" or "int")
-    "label": string // Parameter description
-    "default": number // Default value
+    "label": string, // Parameter description
+    "value": number, // Default value
+    "min": number,
+    "max": number,
+    "step": number
   }[] // Type info for uniform variables
 }`;
 

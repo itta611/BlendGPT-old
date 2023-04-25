@@ -34,9 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   try {
     JSONData = JSON.parse(responseData);
-    JSONData.isSuccess = true;
+    JSONData.success = true;
   } catch {
-    JSONData = { isSuccess: false, message: responseData };
+    JSONData = { success: false, message: responseData };
   }
 
   if (method !== 'POST') {
