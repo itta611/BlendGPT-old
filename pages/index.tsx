@@ -42,10 +42,10 @@ export default function Home() {
       setInputMessage('');
 
       const response = await trigger(inputMessage);
+      setIsLoading(false);
       if (typeof response === 'undefined') {
         throw Error('Post failed.');
       }
-      setIsLoading(false);
 
       if (!response.success) {
         setErrorMessage(response.message);
