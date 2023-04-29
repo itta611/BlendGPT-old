@@ -21,7 +21,7 @@ const Slider = forwardRef<
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb
       className={classNames(
-        'flex h-7 w-20 bg-slate-800 rounded-sm outline-none items-center',
+        'flex h-7 w-20 bg-slate-800 rounded-sm outline-none items-center shadow',
         'before:block before:bg-white/50 before:h-[2px] before:w-full'
       )}
     />
