@@ -134,7 +134,7 @@ export default function Home() {
               </div>
             )}
           </form>
-          <ParamArea params={params} handleParamChange={handleParamChange} />
+          {params.length > 1 && <ParamArea params={params} handleParamChange={handleParamChange} />}
         </div>
       </main>
     </>
