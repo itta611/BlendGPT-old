@@ -9,3 +9,14 @@ html {
 body {
   @apply text-white;
 }
+
+input[type='range'] {
+  @apply appearance-none bg-slate-800 border-r border-t border-white/20 rounded-sm;
+}
+
+input[type='range']::-webkit-slider-runnable-track,
+input[type='range']::-moz-range-track,
+input[type='range']::-ms-track {
+  @apply bg-slate-800;
+  -webkit-appearance: none;
+}

@@ -1,5 +1,6 @@
 export interface Param {
   name: string;
+  label: string;
   type: 'float' | 'int';
   value: number;
   min: number;

@@ -31,7 +31,7 @@ const Input: FC<InputProps> = ({ className, disabled, leftItem, rightItem, ...pr
         {...props}
         disabled={disabled}
         className={classNames(
-          'w-full shadow-md bg-white/10 rounded-md px-5 py-3 outline-none focus:ring-4 transition-all'
+          'w-full shadow-md bg-white/10 rounded-md px-5 py-3 outline-none transition-all'
         )}
       />
       {rightItem && <HorizontalItem disabled={disabled}>{rightItem}</HorizontalItem>}

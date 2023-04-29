@@ -3,13 +3,14 @@ import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 import Logo from 'components/Logo';
+import ParamArea from 'components/ParamArea';
 import WebGLCanvas from 'components/WebGLCavas';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
-import { Response } from 'types/base';
+import { Param, Response } from 'types/base';
 
 async function postMessage(url: string, { arg }: { arg: string }): Promise<Response> {
   const r = await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) });
@@ -22,7 +23,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
-  const [params, setParams] = useState([]);
+  const [params, setParams] = useState<Param[]>([
+    { label: 'test', name: 'test', type: 'float', value: 0, min: 0, max: 100, step: 1 },
+  ]);
   const canvasDrawer = useCanvasDrawer();
 
   const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -129,6 +132,7 @@ export default function Home() {
               </div>
             )}
           </form>
+          <ParamArea params={params} />
         </div>
       </main>
     </>
