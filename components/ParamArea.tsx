@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { Param } from 'types/base';
 import Slider from './VerticalSlider';
 
-interface ParamAreaType {
+interface ParamAreaProps {
   params: Param[];
 }
 
-const ParamArea: FC<ParamAreaType> = ({ params }) => {
+const ParamArea: FC<ParamAreaProps> = ({ params }) => {
   return (
     <div className="flex p-5">
       {params.map((param, index) => (
