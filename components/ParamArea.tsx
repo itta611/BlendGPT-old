@@ -1,12 +1,13 @@
-import { FC } from 'react';
+import { FC, FormEvent } from 'react';
 import { Param } from 'types/base';
 import Slider from './VerticalSlider';
 
 interface ParamAreaProps {
+  handleParamChange: (name: string, value: number) => void;
   params: Param[];
 }
 
-const ParamArea: FC<ParamAreaProps> = ({ params }) => {
+const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
   return (
     <div className="flex p-5">
       {params.map((param, index) => (
@@ -17,6 +18,7 @@ const ParamArea: FC<ParamAreaProps> = ({ params }) => {
             min={param.min}
             max={param.max}
             step={param.step}
+            onValueChange={(value) => handleParamChange(param.name, value[0])}
           />
           <span className="text-white">{param.label}</span>
         </div>

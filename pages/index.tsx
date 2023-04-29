@@ -8,7 +8,7 @@ import WebGLCanvas from 'components/WebGLCavas';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { Param, Response } from 'types/base';
 
@@ -23,9 +23,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
-  const [params, setParams] = useState<Param[]>([
-    { label: 'test', name: 'test', type: 'float', value: 0, min: 0, max: 100, step: 1 },
-  ]);
+  const [params, setParams] = useState<Param[]>([]);
   const canvasDrawer = useCanvasDrawer();
 
   const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,11 +55,16 @@ export default function Home() {
 
       canvasDrawer.updateFragmentShader(response.code);
       response.params.forEach((param) => {
-        canvasDrawer.appendUniformVariable(param.name, param.value);
+        canvasDrawer.updateUniformVariable(param.name, param.value);
       });
       canvasDrawer.draw();
-      setParams(response.params as never);
+      setParams(response.params);
     }
+  };
+
+  const handleParamChange = (name: string, value: number) => {
+    canvasDrawer.updateUniformVariable(name, value);
+    canvasDrawer.draw();
   };
 
   return (
@@ -132,7 +135,7 @@ export default function Home() {
               </div>
             )}
           </form>
-          <ParamArea params={params} />
+          {params.length > 0 && <ParamArea params={params} handleParamChange={handleParamChange} />}
         </div>
       </main>
     </>

@@ -159,15 +159,14 @@ void main() {
     this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
   }
 
-  public appendUniformVariable(name: string, value: number) {
-    const uniformLocation = this.gl.getUniformLocation(this.program, name);
-    this.gl.uniform1f(uniformLocation, value); // Increase this value for more blur
-    console.log('uniform variable appended');
-  }
-
   public updateFragmentShader(shader: string) {
     this.fragmentShaderSource = shader;
     this.setupProgram();
+  }
+
+  public updateUniformVariable(name: string, value: number) {
+    const uniformLocation = this.gl.getUniformLocation(this.program, name);
+    this.gl.uniform1f(uniformLocation, value);
   }
 
   public draw() {
@@ -180,7 +179,7 @@ void main() {
     this.gl.uniform2f(resolutionUniformLocation, this.canvas.width, this.canvas.height);
 
     const radiusUniformLocation = this.gl.getUniformLocation(this.program, 'u_radius');
-    this.gl.uniform1f(radiusUniformLocation, 5.0); // Increase this value for more blur
+    this.gl.uniform1f(radiusUniformLocation, 5.0);
 
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
 
