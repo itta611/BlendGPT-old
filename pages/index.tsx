@@ -80,7 +80,7 @@ export default function Home() {
             <Logo />
           </h2>
         </div>
-        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md">
+        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
           {imageURL ? (
             <div className="max-h-[500px]">
               <WebGLCanvas imageURL={imageURL} className="w-full max-h-[500px] object-contain" />
@@ -108,7 +108,6 @@ export default function Home() {
           )}
           <form>
             <Input
-              className="mt-8"
               disabled={typeof imageURL === 'undefined'}
               onChange={(e) => setInputMessage(e.target.value)}
               value={inputMessage}
@@ -135,7 +134,7 @@ export default function Home() {
               </div>
             )}
           </form>
-          {params.length > 0 && <ParamArea params={params} handleParamChange={handleParamChange} />}
+          <ParamArea params={params} handleParamChange={handleParamChange} />
         </div>
       </main>
     </>
