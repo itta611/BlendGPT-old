@@ -152,8 +152,12 @@ export default function Home() {
               </div>
             )}
           </form>
-          <div className="h-0 border-t border-t-white/20 mx-3"></div>
-          {params.length > 0 && <ParamArea params={params} handleParamChange={handleParamChange} />}
+          {params.length > 0 && (
+            <>
+              <div className="h-0 border-t border-t-white/20 mx-3"></div>
+              <ParamArea params={params} handleParamChange={handleParamChange} />
+            </>
+          )}
         </div>
       </main>
     </>
