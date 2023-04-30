@@ -20,11 +20,11 @@ async function postMessage(url: string, { arg }: { arg: string }): Promise<Respo
 export default function Home() {
   const { trigger } = useSWRMutation('/api/edit-image', postMessage);
   const [inputMessage, setInputMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
   const [params, setParams] = useState<Param[]>([]);
-  const canvasDrawer = useCanvasDrawer();
+  const [shader, setShader] = useState<string | undefined>(undefined);
 
   const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
@@ -53,18 +53,21 @@ export default function Home() {
         return;
       }
 
-      canvasDrawer.updateFragmentShader(response.code);
-      response.params.forEach((param) => {
-        canvasDrawer.updateUniformVariable(param.name, param.value);
-      });
-      canvasDrawer.draw();
+      setShader(response.code);
       setParams(response.params);
     }
   };
 
   const handleParamChange = (name: string, value: number) => {
-    canvasDrawer.updateUniformVariable(name, value);
-    canvasDrawer.draw();
+    setParams(
+      params.map((param) => {
+        if (param.name === name) {
+          return { ...param, value };
+        } else {
+          return param;
+        }
+      })
+    );
   };
 
   return (
@@ -83,7 +86,12 @@ export default function Home() {
         <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
           {imageURL ? (
             <div className="max-h-[500px]">
-              <WebGLCanvas imageURL={imageURL} className="w-full max-h-[500px] object-contain" />
+              <WebGLCanvas
+                imageURL={imageURL}
+                params={params}
+                shader={shader}
+                className="w-full max-h-[500px] object-contain"
+              />
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center w-full h-[400px] space-y-6">
