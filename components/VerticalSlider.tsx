@@ -16,7 +16,7 @@ const Slider = forwardRef<
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-full w-1.5 overflow-hidden rounded-full bg-white/20">
+    <SliderPrimitive.Track className="relative h-full w-1 overflow-hidden rounded-full bg-white/20">
       <SliderPrimitive.Range />
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb
