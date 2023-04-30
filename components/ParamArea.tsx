@@ -20,7 +20,7 @@ const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
             step={param.step}
             onValueChange={(value) => handleParamChange(param.name, value[0])}
           />
-          <div className="text-white">{param.label}</div>
+          <div className="text-white text-center">{param.label}</div>
         </div>
       ))}
     </div>
