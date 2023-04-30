@@ -19,7 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   } else {
     conversation = [{ role: 'system', content: systemPrompt }];
   }
-  conversation.push({ role: 'user', content: message });
+  conversation.push({
+    role: 'user',
+    content: `${message}\n\nREMOVE ALL INFORMATION OTHER THAN JSON.`,
+  });
   console.log(conversation);
 
   const configuration = new Configuration({
