@@ -8,12 +8,15 @@ import WebGLCanvas from 'components/WebGLCavas';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { Param, Response } from 'types/base';
 
-async function postMessage(url: string, { arg }: { arg: string }): Promise<Response> {
-  const r = await fetch(url, { method: 'POST', body: JSON.stringify({ message: arg }) });
+async function postMessage(
+  url: string,
+  { arg }: { arg: { message: string; continueConversation: boolean } }
+): Promise<Response> {
+  const r = await fetch(url, { method: 'POST', body: JSON.stringify(arg) });
   return r.json();
 }
 
@@ -25,6 +28,7 @@ export default function Home() {
   const [imageURL, setImageURL] = useState<string | undefined>(undefined);
   const [params, setParams] = useState<Param[]>([]);
   const [shader, setShader] = useState<string | undefined>(undefined);
+  const continueConversation = useRef(false);
 
   const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
@@ -42,7 +46,13 @@ export default function Home() {
       setErrorMessage('');
       setInputMessage('');
 
-      const response = await trigger(inputMessage);
+      const response = await trigger({
+        message: inputMessage,
+        continueConversation: continueConversation.current,
+      });
+
+      continueConversation.current = true;
+
       setIsLoading(false);
       if (typeof response === 'undefined') {
         throw Error('Post failed.');

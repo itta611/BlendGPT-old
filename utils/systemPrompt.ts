@@ -5,15 +5,14 @@ Be sure to remove information other than JSON.
 
 {
   "code": string, // Created shader code
-  "params": {
+  "params": Array[{
     "name": string, // Variable name
-    "type": string, // Variable type ("float" or "int")
-    "label": string, // Parameter description
+    "label": string, // Parameter description (under 18 characters)
     "value": number, // Default value
     "min": number,
     "max": number,
     "step": number
-  }[] // Type info for uniform variables
+  }] // Type info for uniform variables
 }`;
 
 export default systemPrompt;
