@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   let conversation: ChatCompletionRequestMessage[] = [];
   let JSONData;
 
-  if (continueConversation) {
+  if (continueConversation && session.conversation) {
     conversation.push(...session.conversation);
   } else {
     conversation = [{ role: 'system', content: systemPrompt }];
