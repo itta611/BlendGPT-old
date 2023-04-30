@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   const responseData = completion.data.choices[0].message.content;
-  console.log(responseData);
+  responseData.replace(/[\u0000-\u0019]+/g, '');
 
   try {
     JSONData = JSON.parse(responseData);
