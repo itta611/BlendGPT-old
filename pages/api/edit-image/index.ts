@@ -23,7 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     role: 'user',
     content: `${message}\n\nREMOVE ALL INFORMATION OTHER THAN JSON.`,
   });
-  console.log(conversation);
 
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -46,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   session.conversation = conversation;
 
   const responseData = responseMessage.content;
-  responseData.replace(/[\u0000-\u0019]+/g, '');
 
   try {
     JSONData = JSON.parse(responseData);
