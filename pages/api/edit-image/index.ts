@@ -20,8 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     conversation = [{ role: 'system', content: systemPrompt }];
   }
   conversation.push({
+    role: 'system',
+    content: `前回までのパラメーターも結果に含めよ。`,
+  });
+  conversation.push({
     role: 'user',
-    content: `${message}\n\nREMOVE ALL INFORMATION OTHER THAN JSON.`,
+    content: message,
   });
 
   const configuration = new Configuration({
@@ -41,10 +45,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  conversation.push({ role: 'system', content: responseMessage.content });
-  session.conversation = conversation;
-
   const responseData = responseMessage.content;
+
+  conversation.push({ role: 'assistant', content: responseData });
+  session.conversation = conversation;
+  console.log(conversation);
 
   try {
     JSONData = JSON.parse(responseData);
