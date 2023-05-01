@@ -9,9 +9,9 @@ interface ParamAreaProps {
 
 const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-5">
       {params.map((param, index) => (
-        <div key={index} className="w-16 space-y-2">
+        <div key={index} className="w-20 space-y-2">
           <Slider
             orientation="vertical"
             defaultValue={[param.value]}
@@ -20,7 +20,7 @@ const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
             step={param.step}
             onValueChange={(value) => handleParamChange(param.name, value[0])}
           />
-          <div className="text-white text-center">{param.label}</div>
+          <div className="text-slate-400 text-center">{param.label}</div>
         </div>
       ))}
     </div>
