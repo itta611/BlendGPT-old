@@ -6,7 +6,7 @@ If you use the index, limit variable for the for loop, define it as a constant v
 ## Format
 
 
-OUTPUT_START{
+{
   "code": string, // Created shader code
   "params": Array[{
     "name": string, // Variable name
@@ -16,7 +16,7 @@ OUTPUT_START{
     "max": number,
     "step": number
   }] // Type info for uniform variables
-}OUTPUT_END
+}
 `;
 
 export default systemPrompt;

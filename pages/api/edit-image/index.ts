@@ -50,16 +50,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   let JSONData = null;
 
-  const matchArray = responseMessage.content.match(/OUTPUT_START(.*)OUTPUT_END/s);
-  if (matchArray !== null && matchArray.length >= 1) {
-    try {
-      JSONData = JSON.parse(matchArray[1]);
-      JSONData.success = true;
-    } catch {
-      JSONData = { success: false, message: '出力のパースに失敗しました...。' };
-    }
-  } else {
-    JSONData = { success: false, message: responseMessage.content };
+  try {
+    JSONData = JSON.parse(responseMessage.content);
+    JSONData.success = true;
+  } catch {
+    JSONData = { success: false, message: '出力のパースに失敗しました...' };
   }
 
   if (method !== 'POST') {
