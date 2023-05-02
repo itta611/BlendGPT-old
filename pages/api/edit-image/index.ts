@@ -19,12 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     conversation = [{ role: 'system', content: systemPrompt }];
   }
   conversation.push({
-    role: 'system',
-    content: `前回までのパラメーターも結果に含めよ。`,
-  });
-  conversation.push({
     role: 'user',
     content: message,
+  });
+  conversation.push({
+    role: 'assistant',
+    content: `前回までのパラメーターも結果に含めて出力します。\n{`,
   });
 
   const configuration = new Configuration({
@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   let JSONData = null;
 
   try {
-    JSONData = JSON.parse(responseMessage.content);
+    JSONData = JSON.parse(`{${responseMessage.content}`);
     JSONData.success = true;
   } catch {
     JSONData = { success: false, message: '出力のパースに失敗しました...' };
