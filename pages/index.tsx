@@ -80,6 +80,10 @@ export default function Home() {
     );
   };
 
+  const handleError = () => {
+    setErrorMessage('実行時エラーが発生しました...\n再度別の書き方でお試しください。');
+  };
+
   return (
     <>
       <Head>
@@ -100,6 +104,7 @@ export default function Home() {
                 imageURL={imageURL}
                 params={params}
                 shader={shader}
+                onShaderError={handleError}
                 className="w-full max-h-[500px] object-contain"
               />
             </div>

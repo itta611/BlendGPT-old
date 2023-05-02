@@ -7,9 +7,17 @@ interface WebGLCanvasProps extends HTMLAttributes<HTMLCanvasElement> {
   params: Param[];
   shader?: string;
   imageURL: string;
+  onShaderError: (message: string) => void;
 }
 
-const WebGLCanvas: FC<WebGLCanvasProps> = ({ imageURL, params, shader, className, ...props }) => {
+const WebGLCanvas: FC<WebGLCanvasProps> = ({
+  params,
+  shader,
+  imageURL,
+  onShaderError,
+  className,
+  ...props
+}) => {
   const canvasDrawer = useCanvasDrawer();
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const canvasDinamicShadowRef = useRef<HTMLCanvasElement>(null!);
@@ -45,8 +53,14 @@ const WebGLCanvas: FC<WebGLCanvasProps> = ({ imageURL, params, shader, className
 
   useEffect(() => {
     if (!shader) return;
-    canvasDrawer.updateFragmentShader(shader);
-  }, [shader, canvasDrawer]);
+    try {
+      canvasDrawer.updateFragmentShader(shader);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        onShaderError(e.message);
+      }
+    }
+  }, [shader, canvasDrawer, onShaderError]);
 
   return (
     <div className="relative">
