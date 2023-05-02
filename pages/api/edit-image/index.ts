@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const { message, continueConversation } = JSON.parse(body);
   const session = await getSession(req, res);
   let conversation: ChatCompletionRequestMessage[] = [];
-  let JSONData;
 
   if (continueConversation && session.conversation) {
     conversation.push(...session.conversation);
@@ -40,22 +39,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const responseMessage = completion.data.choices[0].message;
 
-  if (typeof responseMessage === 'undefined') {
+  if (typeof responseMessage === 'undefined' || responseMessage.content === null) {
     res.status(500).end();
     return;
   }
 
-  const responseData = responseMessage.content;
-
-  conversation.push({ role: 'assistant', content: responseData });
+  conversation.push({ role: 'assistant', content: responseMessage.content });
   session.conversation = conversation;
   console.log(conversation);
 
-  try {
-    JSONData = JSON.parse(responseData);
-    JSONData.success = true;
-  } catch {
-    JSONData = { success: false, message: responseData };
+  let JSONData = null;
+
+  const matchArray = responseMessage.content.match(/OUTPUT_START(.*)OUTPUT_END/s);
+  if (matchArray !== null && matchArray.length >= 1) {
+    try {
+      JSONData = JSON.parse(matchArray[1]);
+      JSONData.success = true;
+    } catch {
+      JSONData = { success: false, message: '出力のパースに失敗しました...。' };
+    }
+  } else {
+    JSONData = { success: false, message: responseMessage.content };
   }
 
   if (method !== 'POST') {
