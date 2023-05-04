@@ -9,7 +9,7 @@ interface ParamAreaProps {
 
 const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
   return (
-    <div className="flex space-x-5">
+    <div className="flex space-x-5 overflow-x-scroll">
       {params.map((param, index) => (
         <div key={index} className="w-20 space-y-2">
           <Slider

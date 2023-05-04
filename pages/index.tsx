@@ -90,8 +90,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen flex flex-col justify-between space-y-16">
-        <main className="w-[800px] mx-auto">
+      <div className="min-h-screen flex flex-col justify-between items-center space-y-16">
+        <main className="max-w-[800px] w-full sm:px-10 px-5">
           <Header />
           <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
             {imageURL ? (

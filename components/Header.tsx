@@ -5,7 +5,7 @@ import { IconStar, IconStarFilled } from '@tabler/icons-react';
 
 const Header: FC = () => {
   return (
-    <div className="flex justify-between items-center py-3">
+    <div className="flex justify-between items-start sm:items-center py-3 flex-col sm:flex-row gap-y-2">
       <Logo />
       <a href="https://github.com/itta611/BlendGPT" target="_blank" rel="noopener noreferrer">
         <Button

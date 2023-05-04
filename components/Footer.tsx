@@ -3,7 +3,7 @@ import { LogoWithOutGlow } from './Logo';
 
 const Loader: FC = () => {
   return (
-    <footer className="flex flex-col items-center bg-slate-700 p-6 border-t border-slate-600">
+    <footer className="flex flex-col items-center bg-slate-700 p-6 border-t border-slate-600 w-full">
       <LogoWithOutGlow className="!fill-slate-500 mb-2" />
       <p className="text-slate-400 text-center">
         Developed by{' '}
