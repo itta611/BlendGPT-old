@@ -5,6 +5,7 @@ import Input from 'components/Input';
 import Logo from 'components/Logo';
 import ParamArea from 'components/ParamArea';
 import WebGLCanvas from 'components/WebGLCavas';
+import Footer from 'components/Footer';
 import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -91,80 +92,83 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-[800px] m-auto">
-        <div className="py-3">
-          <h2 className="text-4xl">
-            <Logo />
-          </h2>
-        </div>
-        <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
-          {imageURL ? (
-            <div className="max-h-[500px]">
-              <WebGLCanvas
-                imageURL={imageURL}
-                params={params}
-                shader={shader}
-                onShaderError={handleError}
-                className="w-full max-h-[500px] object-contain"
-              />
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center w-full h-[400px] space-y-6">
-              <p className="text-center text-slate-400 text-sm">
-                画像を選択してください。
-                <br />
-                （選択された画像がサーバーにアップロードされることはありません。）
-              </p>
-              <label htmlFor="file-select">
-                <Button as="span" className="cursor-pointer">
-                  画像を選択
-                </Button>
-              </label>
-              <input
-                type="file"
-                id="file-select"
-                className="hidden"
-                accept="image/*"
-                onChange={handleFileSelect}
-              />
-            </div>
-          )}
-          <form>
-            <Input
-              disabled={typeof imageURL === 'undefined'}
-              onChange={(e) => setInputMessage(e.target.value)}
-              value={inputMessage}
-              placeholder="操作を具体的に書いてください！"
-              rightItem={
-                <IconButton
-                  type="submit"
-                  variant="ghost"
-                  className="rounded-l-none w-16"
-                  isLoading={isLoading}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePost();
-                  }}
-                >
-                  {<IconSend size={20} />}
-                </IconButton>
-              }
-            />
-            {isLoading && <div className="text-xs font-bold mt-2">AIが考え中...</div>}
-            {errorMessage && (
-              <div className="text-xs font-bold text-red-400 mt-2">
-                AIからのメッセージ: {errorMessage}
+      <div className="min-h-screen flex flex-col justify-between space-y-16">
+        <main className="w-[800px] mx-auto">
+          <div className="py-3">
+            <h2 className="text-4xl">
+              <Logo />
+            </h2>
+          </div>
+          <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
+            {imageURL ? (
+              <div className="max-h-[500px]">
+                <WebGLCanvas
+                  imageURL={imageURL}
+                  params={params}
+                  shader={shader}
+                  onShaderError={handleError}
+                  className="w-full max-h-[500px] object-contain"
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-[400px] space-y-6">
+                <p className="text-center text-slate-400 text-sm">
+                  画像を選択してください。
+                  <br />
+                  （選択された画像がサーバーにアップロードされることはありません。）
+                </p>
+                <label htmlFor="file-select">
+                  <Button as="span" className="cursor-pointer">
+                    画像を選択
+                  </Button>
+                </label>
+                <input
+                  type="file"
+                  id="file-select"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                />
               </div>
             )}
-          </form>
-          {params.length > 0 && (
-            <>
-              <div className="h-0 border-t border-t-white/20 mx-3"></div>
-              <ParamArea params={params} handleParamChange={handleParamChange} />
-            </>
-          )}
-        </div>
-      </main>
+            <form>
+              <Input
+                disabled={typeof imageURL === 'undefined'}
+                onChange={(e) => setInputMessage(e.target.value)}
+                value={inputMessage}
+                placeholder="操作を具体的に書いてください！"
+                rightItem={
+                  <IconButton
+                    type="submit"
+                    variant="ghost"
+                    className="rounded-l-none w-16"
+                    isLoading={isLoading}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePost();
+                    }}
+                  >
+                    {<IconSend size={20} />}
+                  </IconButton>
+                }
+              />
+              {isLoading && <div className="text-xs font-bold mt-2">AIが考え中...</div>}
+              {errorMessage && (
+                <div className="text-xs font-bold text-red-400 mt-2">
+                  AIからのメッセージ: {errorMessage}
+                </div>
+              )}
+            </form>
+            {params.length > 0 && (
+              <>
+                <div className="h-0 border-t border-t-white/20 mx-3"></div>
+                <ParamArea params={params} handleParamChange={handleParamChange} />
+              </>
+            )}
+          </div>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }

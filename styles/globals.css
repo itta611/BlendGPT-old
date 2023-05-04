@@ -10,6 +10,10 @@ body {
   @apply text-white;
 }
 
+a {
+  @apply text-sky-400 underline underline-offset-4;
+}
+
 input[type='range'] {
   @apply appearance-none bg-slate-800 border-r border-t border-white/20 rounded-sm;
 }
