@@ -12,7 +12,7 @@ const Header: FC = () => {
           leftIcon={
             <IconStarFilled
               size={20}
-              className="text-yellow-400 group-hover:text-pink-950 transition"
+              className="text-yellow-400 group-hover:text-pink-900 transition"
             />
           }
         >
