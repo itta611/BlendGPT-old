@@ -4,6 +4,9 @@ import { WebGLCanvasDrawer } from 'utils/WebGLCanvasDrawer';
 const canvasDrawerContext = createContext<MutableRefObject<WebGLCanvasDrawer>>(null!);
 
 export const useCanvasDrawer = () => {
+  if (useContext(canvasDrawerContext) === null) {
+    throw Error('useCanvasDrawer must be used in CanvasDrawerProvider');
+  }
   return useContext(canvasDrawerContext).current;
 };
 
