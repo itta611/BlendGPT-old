@@ -7,7 +7,7 @@ const Header: FC = () => {
   return (
     <div className="flex justify-between items-center py-3">
       <Logo />
-      <a href="https://github.com/itta611" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/itta611/BlendGPT" target="_blank" rel="noopener noreferrer">
         <Button
           leftIcon={
             <IconStarFilled
