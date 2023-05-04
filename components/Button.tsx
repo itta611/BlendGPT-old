@@ -33,7 +33,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
     return (
       <Component
         className={classNames(
-          'inline-flex items-center justify-center font-bold whitespace-nowrap relative select-none space-x-2 text-white',
+          'group inline-flex items-center justify-center font-bold whitespace-nowrap relative select-none space-x-2 text-white',
           'transition',
           {
             'hover:bg-pink-200 hover:shadow-[0_0_15px_-3px] hover:shadow-pink-400 hover:text-pink-950 border border-transparent hover:border-l-white/20 hover:border-t-white/20':
@@ -54,7 +54,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithRef<ButtonProps>>(
         ref={ref}
         {...props}
       >
-        {showLoader && <span>{leftIcon}</span>}
+        {showLoader && <span className="mr-2">{leftIcon}</span>}
         {isLoading && <Loader className={'text-inherit'} size={size === 'md' ? 20 : 16} />}
         {children}
       </Component>

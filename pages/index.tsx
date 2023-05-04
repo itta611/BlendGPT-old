@@ -2,13 +2,11 @@ import { IconSend } from '@tabler/icons-react';
 import Button from 'components/Button';
 import IconButton from 'components/IconButton';
 import Input from 'components/Input';
-import Logo from 'components/Logo';
 import ParamArea from 'components/ParamArea';
 import WebGLCanvas from 'components/WebGLCavas';
+import Header from 'components/Header';
 import Footer from 'components/Footer';
-import { useCanvasDrawer } from 'hooks/useCanvasDrawer';
 import Head from 'next/head';
-import Image from 'next/image';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { Param, Response } from 'types/base';
@@ -94,11 +92,7 @@ export default function Home() {
       </Head>
       <div className="min-h-screen flex flex-col justify-between space-y-16">
         <main className="w-[800px] mx-auto">
-          <div className="py-3">
-            <h2 className="text-4xl">
-              <Logo />
-            </h2>
-          </div>
+          <Header />
           <div className="bg-white/10 border-t border-l border-white/10 rounded-md p-10 mt-6 shadow-md space-y-8">
             {imageURL ? (
               <div className="max-h-[500px]">
