@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const openai = new OpenAIApi(configuration);
 
   const completion = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: conversation,
   });
 
@@ -46,12 +46,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   conversation.push({ role: 'assistant', content: responseMessage.content });
   session.conversation = conversation;
-  console.log(conversation);
 
   let JSONData = null;
+  console.log(`{${responseMessage.content}`);
 
   try {
-    JSONData = JSON.parse(`{${responseMessage.content}`);
+    JSONData = JSON.parse(`{${responseMessage.content.replace(/[\u0000-\u001F]+/g, '')}`);
     JSONData.success = true;
   } catch {
     JSONData = { success: false, message: '出力のパースに失敗しました...' };
