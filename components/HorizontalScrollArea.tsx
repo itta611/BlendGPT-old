@@ -1,23 +1,42 @@
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import classNames from 'classnames';
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useRef } from 'react';
 
 const ScrollArea = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Root>,
   ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={classNames('relative overflow-hidden', className)}
-    {...props}
-  >
-    <ScrollAreaPrimitive.Viewport className="h-full w-full">
-      {children}
-    </ScrollAreaPrimitive.Viewport>
-    <ScrollBar orientation="horizontal" />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-));
+>(({ className, children, ...props }, ref) => {
+  const scrollElementRef = useRef<HTMLDivElement>(null!);
+
+  useEffect(() => {
+    const scrollElement = scrollElementRef.current;
+
+    scrollElement.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      const maxScrollLeft = scrollElement.scrollWidth - scrollElement.clientWidth;
+      if (
+        (scrollElement.scrollLeft <= 0 && e.deltaY < 0) ||
+        (scrollElement.scrollLeft >= maxScrollLeft && e.deltaY > 0)
+      )
+        return;
+      e.preventDefault();
+      scrollElement.scrollLeft += e.deltaY;
+    });
+  });
+  return (
+    <ScrollAreaPrimitive.Root
+      ref={ref}
+      className={classNames('relative overflow-hidden', className)}
+      {...props}
+    >
+      <ScrollAreaPrimitive.Viewport className="h-full w-full" ref={scrollElementRef}>
+        {children}
+      </ScrollAreaPrimitive.Viewport>
+      <ScrollBar orientation="horizontal" />
+      <ScrollAreaPrimitive.Corner />
+    </ScrollAreaPrimitive.Root>
+  );
+});
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
 const ScrollBar = forwardRef<
