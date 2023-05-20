@@ -1,7 +1,7 @@
 import { FC, FormEvent } from 'react';
 import { Param } from 'types/base';
 import Slider from './VerticalSlider';
-import { ScrollArea } from './ScrollArea';
+import { ScrollArea } from './HorizontalScrollArea';
 
 interface ParamAreaProps {
   handleParamChange: (name: string, value: number) => void;
