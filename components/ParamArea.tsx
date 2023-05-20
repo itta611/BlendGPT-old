@@ -1,6 +1,7 @@
 import { FC, FormEvent } from 'react';
 import { Param } from 'types/base';
 import Slider from './VerticalSlider';
+import { ScrollArea } from './ScrollArea';
 
 interface ParamAreaProps {
   handleParamChange: (name: string, value: number) => void;
@@ -9,21 +10,101 @@ interface ParamAreaProps {
 
 const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
   return (
-    <div className="flex space-x-5 overflow-x-scroll">
-      {params.map((param, index) => (
-        <div key={index} className="w-20 space-y-2">
-          <Slider
-            orientation="vertical"
-            defaultValue={[param.value]}
-            min={param.min}
-            max={param.max}
-            step={param.step}
-            onValueChange={(value) => handleParamChange(param.name, value[0])}
-          />
-          <div className="text-slate-400 text-center">{param.label}</div>
-        </div>
-      ))}
-    </div>
+    <ScrollArea>
+      <div className="flex space-x-5">
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="horizontal"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+        {params.map((param, index) => (
+          <div key={index} className="w-20 space-y-2">
+            <Slider
+              orientation="vertical"
+              defaultValue={[param.value]}
+              min={param.min}
+              max={param.max}
+              step={param.step}
+              onValueChange={(value) => handleParamChange(param.name, value[0])}
+            />
+            <div className="text-slate-400 text-center">{param.label}</div>
+          </div>
+        ))}
+      </div>
+    </ScrollArea>
   );
 };
 
