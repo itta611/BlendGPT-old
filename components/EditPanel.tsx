@@ -56,7 +56,7 @@ const EditPanel: FC = () => {
       }
 
       if (!response.success) {
-        setErrorMessage(response.message);
+        setErrorMessage(`AIからのメッセージ: ${response.message}`);
         return;
       }
 
@@ -136,11 +136,7 @@ const EditPanel: FC = () => {
           }
         />
         {isLoading && <div className="text-xs font-bold mt-2">AIが考え中...</div>}
-        {errorMessage && (
-          <div className="text-xs font-bold text-red-400 mt-2">
-            AIからのメッセージ: {errorMessage}
-          </div>
-        )}
+        {errorMessage && <div className="text-xs font-bold text-red-400 mt-2">{errorMessage}</div>}
       </form>
       {params.length > 0 && (
         <>
