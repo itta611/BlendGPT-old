@@ -15,7 +15,7 @@ const ParamArea: FC<ParamAreaProps> = ({ handleParamChange, params }) => {
         {params.map((param, index) => (
           <div key={index} className="w-20 space-y-2">
             <Slider
-              orientation="horizontal"
+              orientation="vertical"
               defaultValue={[param.value]}
               min={param.min}
               max={param.max}
