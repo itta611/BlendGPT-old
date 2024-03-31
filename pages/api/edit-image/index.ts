@@ -22,6 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     role: 'user',
     content: message,
   });
+  conversation.push({
+    role: 'assistant',
+    content: `{`,
+  });
 
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
