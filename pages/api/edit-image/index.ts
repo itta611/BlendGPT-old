@@ -48,10 +48,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   session.conversation = conversation;
 
   let JSONData = null;
-  console.log(`{${responseMessage.content}`);
 
   try {
-    JSONData = JSON.parse(`${responseMessage.content.replace(/[\u0000-\u001F]+/g, '')}`);
+    // console.log(responseMessage.content.replace(/[\u0000-\u001F]+/g, ''));
+    JSONData = JSON.parse(`{${responseMessage.content.replace(/[\u0000-\u001F]+/g, '')}`);
     JSONData.success = true;
   } catch {
     JSONData = { success: false, message: '出力のパースに失敗しました...' };
